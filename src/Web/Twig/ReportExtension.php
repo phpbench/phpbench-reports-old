@@ -6,6 +6,7 @@ use Twig\ExtensionInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Aura\Router\Generator;
+use Twig\TwigFilter;
 
 class ReportExtension extends AbstractExtension
 {
@@ -25,6 +26,15 @@ class ReportExtension extends AbstractExtension
             new TwigFunction('path', function ($name, array $params = []) {
                 return $this->generator->generate($name, $params);
             }),
+        ];
+    }
+
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('values', function (array $array) {
+                return array_values($array);
+            })
         ];
     }
 }

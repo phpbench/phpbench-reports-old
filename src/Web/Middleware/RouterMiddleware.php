@@ -10,6 +10,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Phpbench\Reports\Handler\BenchmarksHandler;
 use Phpbench\Reports\Handler\BenchmarkHandler;
 use Phpbench\Reports\Handler\SubjectHandler;
+use Phpbench\Reports\Handler\VariantHandler;
 
 class RouterMiddleware
 {
@@ -58,8 +59,9 @@ class RouterMiddleware
 
     private function configureRoutes(Map $routeMap)
     {
-        $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
+        $routeMap->get('variant', '/benchmark/{class}/subject/{name}/variant/{suite}', VariantHandler::class);
         $routeMap->get('subject', '/benchmark/{class}/subject/{name}', SubjectHandler::class);
+        $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
         $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
     }
 }

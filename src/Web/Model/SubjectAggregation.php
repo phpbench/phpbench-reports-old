@@ -41,8 +41,14 @@ class SubjectAggregation
      */
     private $vcsBranch;
 
+    /**
+     * @var string
+     */
+    private $suite;
+
     public function __construct(
         DateTimeImmutable $date,
+        string $suite,
         string $benchmarkClass,
         string $subjectName,
         string $averageTime,
@@ -58,6 +64,7 @@ class SubjectAggregation
         $this->host = $host;
         $this->iterations = $iterations;
         $this->vcsBranch = $vcsBranch;
+        $this->suite = $suite;
     }
 
     public function benchmark(): string
@@ -93,5 +100,10 @@ class SubjectAggregation
     public function vcsBranch(): string
     {
         return $this->vcsBranch;
+    }
+
+    public function suite(): string
+    {
+        return $this->suite;
     }
 }

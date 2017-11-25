@@ -21,6 +21,8 @@ use Phpbench\Reports\Twig\ReportExtension;
 use Phpbench\Reports\Handler\BenchmarkHandler;
 use Phpbench\Reports\Repository\SubjectRepository;
 use Phpbench\Reports\Handler\SubjectHandler;
+use Phpbench\Reports\Handler\VariantHandler;
+use Phpbench\Reports\Repository\IterationRepository;
 
 class ApplicationContainerBuilder
 {
@@ -69,6 +71,10 @@ class ApplicationContainerBuilder
             return new BenchmarksHandler($container['twig'], $container[BenchmarkRepository::class]);
         };
 
+        $container[VariantHandler::class] = function (Container $container) {
+            return new VariantHandler($container['twig'], $container[IterationRepository::class]);
+        };
+
         $container[SubjectHandler::class] = function (Container $container) {
             return new SubjectHandler($container['twig'], $container[SubjectRepository::class]);
         };
@@ -83,6 +89,10 @@ class ApplicationContainerBuilder
 
         $container[SubjectRepository::class] = function (Container $container) {
             return new SubjectRepository($container['elastic.client']);
+        };
+
+        $container[IterationRepository::class] = function (Container $container) {
+            return new IterationRepository($container['elastic.client']);
         };
 
         $container['elastic.client'] = function (Container $container) {

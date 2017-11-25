@@ -1,0 +1,60 @@
+{% extends "layout.html.twig" %}
+{% block title %}
+<h2>{{ benchmark }}::{{ subject }}</h2>
+{% endblock %}
+{% block content %}
+<canvas id="linear" height="100px" ></canvas>
+<canvas id="histogram" height="100px"></canvas>
+<table class="ui table">
+    <thead>
+        <tr>
+            <th>Index</th>
+            <th>Time</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for iteration in iterations %}
+        <tr>
+            <td>{{ iteration.index() }}</td>
+            <td>{{ iteration.metric('time', 'net') }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<script>
+var linearCtx = document.getElementById("linear").getContext('2d');
+var linearChart = new Chart(linearCtx, {
+    type: 'line',
+    data: {
+        labels: {{ iterations.indexes() | json_encode | raw }},
+        datasets: [
+            {
+                fill: false,
+                borderColor: "rgb(1,123,123)",
+                borderWidth: 2,
+                label: '# microseconds',
+                data: {{ iterations.metrics('time', 'net') | json_encode | raw }},
+            }
+        ]
+    }
+});
+
+{% set histogram = iterations.histogram('time', 'net') %}
+var histogramCtx = document.getElementById("histogram").getContext('2d');
+var histogramChart = new Chart(histogramCtx, {
+    type: 'bar',
+    data: {
+        labels: {{ histogram | keys | json_encode | raw }},
+        datasets: [
+            {
+                fill: false,
+                borderColor: "rgb(1,123,123)",
+                borderWidth: 2,
+                label: '# microseconds',
+                data: {{ histogram | values | json_encode | raw }},
+            }
+        ]
+    }
+});
+</script>
+{% endblock content %}

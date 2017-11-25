@@ -20,7 +20,7 @@
     <td>{{ aggregate.host }}</td>
     <td>{{ aggregate.vcsBranch }}</td>
     <td>{{ aggregate.date.format('Y-m-d H:i:s') }}</td>
-    <td>{{ aggregate.iterations }}</td>
+    <td><a href="{{ path('variant', { "class": benchmark, "name": subject, "suite": aggregate.suite }) }}">{{ aggregate.iterations }}</a></td>
     <td>{{ aggregate.averageTime }}</a></td>
 </tr>
 {% endfor %}

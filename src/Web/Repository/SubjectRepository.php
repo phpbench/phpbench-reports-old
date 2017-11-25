@@ -127,6 +127,7 @@ class SubjectRepository
         foreach ($result['aggregations']['benchmark']['subjects']['buckets'] as $bucket) {
             $aggregations[] = new SubjectAggregation(
                 new DateTimeImmutable($bucket['date']['buckets'][0]['key_as_string']),
+                $bucket['key'],
                 $benchmarkClass,
                 $subjectName,
                 $bucket['average']['value'],
