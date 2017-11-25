@@ -1,0 +1,11 @@
+{
+  "name": "phpbench-reports",
+  "version": "1.0.0",
+  "license": "MIT",
+  "dependencies": {
+    "semantic-ui-css": "^2.2.12"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

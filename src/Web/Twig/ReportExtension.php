@@ -22,7 +22,7 @@ class ReportExtension extends AbstractExtension
     public function getFunctions()
     {
         return [
-            new TwigFunction('path', function ($name, array $params) {
+            new TwigFunction('path', function ($name, array $params = []) {
                 return $this->generator->generate($name, $params);
             }),
         ];
