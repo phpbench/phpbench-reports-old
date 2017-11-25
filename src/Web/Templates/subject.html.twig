@@ -1,1 +1,48 @@
-{% extend "layout.html.twig" %}
+{% extends "layout.html.twig" %}
+{% block title %}
+<h2>{{ benchmark }}::{{ subject }}</h2>
+{% endblock %}
+{% block content %}
+<canvas id="myChart" ></canvas>
+<table class="ui table">
+    <thead>
+        <tr>
+            <th>Host</th>
+            <th>VCS Branch</th>
+            <th>Date</th>
+            <th>Iterations</th>
+            <th>Avg</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for aggregate in aggregates %}
+<tr>
+    <td>{{ aggregate.host }}</td>
+    <td>{{ aggregate.vcsBranch }}</td>
+    <td>{{ aggregate.date.format('Y-m-d H:i:s') }}</td>
+    <td>{{ aggregate.iterations }}</td>
+    <td>{{ aggregate.averageTime }}</a></td>
+</tr>
+{% endfor %}
+    </tbody>
+</table>
+<script>
+var ctx = document.getElementById("myChart").getContext('2d');
+var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels: {{ aggregates.dates | json_encode | raw }},
+        datasets: [
+            {
+                fill: false,
+                borderColor: "rgb(1,123,123)",
+                borderWidth: 2,
+                label: '# microseconds',
+                data: {{ aggregates.averageTimes | json_encode | raw }},
+            }
+        ]
+    }
+});
+</script>
+
+{% endblock %}

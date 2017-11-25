@@ -1,6 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="/assets/semantic.css" />
+        <script src="/assets/Chart.js"></script>
     </head>
     <body>
         <div class="ui container">
@@ -15,6 +16,8 @@
         <div class="ui one item menu">
             <a class="active item" href="{{ path('benchmarks') }}">Benchmarks</a>
         </div>
+        {% block title %}
+        {% endblock %}
         {% block content %}
         {% endblock %}
         </div>

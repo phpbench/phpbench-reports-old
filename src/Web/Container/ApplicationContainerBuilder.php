@@ -20,6 +20,7 @@ use Aura\Router\RouterContainer;
 use Phpbench\Reports\Twig\ReportExtension;
 use Phpbench\Reports\Handler\BenchmarkHandler;
 use Phpbench\Reports\Repository\SubjectRepository;
+use Phpbench\Reports\Handler\SubjectHandler;
 
 class ApplicationContainerBuilder
 {
@@ -66,6 +67,10 @@ class ApplicationContainerBuilder
 
         $container[BenchmarksHandler::class] = function (Container $container) {
             return new BenchmarksHandler($container['twig'], $container[BenchmarkRepository::class]);
+        };
+
+        $container[SubjectHandler::class] = function (Container $container) {
+            return new SubjectHandler($container['twig'], $container[SubjectRepository::class]);
         };
 
         $container[BenchmarkHandler::class] = function (Container $container) {

@@ -5,6 +5,9 @@ namespace Phpbench\Reports\Repository;
 use Elasticsearch\Client;
 use Phpbench\Reports\Model\BenchmarkRow;
 use Phpbench\Reports\Model\SubjectRow;
+use Phpbench\Reports\Model\SubjectAggregation;
+use DateTimeImmutable;
+use Phpbench\Reports\Model\SubjectAggregations;
 
 class SubjectRepository
 {
@@ -45,6 +48,69 @@ class SubjectRepository
         ]));
     }
 
+    public function subjectAggregates(string $benchmarkClass, string $subjectName)
+    {
+        return $this->subjectAggregationsFromResult($benchmarkClass, $subjectName, $this->client->search([
+            'index' => self::INDEX,
+            'body' => [
+                'aggs' => [
+                    'benchmark' => [
+                        'filter' => [
+                            'bool' => [
+                                'must' => [ 
+                                    [
+                                        'term' => [
+                                            'class.keyword' => $benchmarkClass,
+                                        ],
+                                    ],
+                                    [
+                                        'term' => [
+                                            'name.keyword' => $subjectName,
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ],
+                        'aggs' => [
+                            'subjects' => [
+                                'terms' => [
+                                    'field' => 'suite.keyword'
+                                ],
+                                'aggs' => [
+                                    'average' => [
+                                        'avg' => [
+                                            'field' => 'stats.mean'
+                                        ],
+                                    ],
+                                    'date' => [
+                                        'terms' => [
+                                            'field' => 'date'
+                                        ],
+                                    ],
+                                    'host' => [
+                                        'terms' => [
+                                            'field' => 'env.uname.host.keyword'
+                                        ],
+                                    ],
+                                    'branch' => [
+                                        'terms' => [
+                                            'field' => 'env.vcs.branch.keyword'
+                                        ],
+                                    ],
+                                    'iterations' => [
+                                        'sum' => [
+                                            'field' => 'nb_iterations'
+                                        ],
+                                    ],
+                                ],
+                            ],
+                        ]
+                    ],
+                ],
+            ],
+        ]));
+    }
+
     private function subjectRowsFromResult(string $benchmarkClass, array $result)
     {
         $benchmarks = [];
@@ -53,5 +119,23 @@ class SubjectRepository
         }
 
         return $benchmarks;
+    }
+
+    private function subjectAggregationsFromResult(string $benchmarkClass, string $subjectName, array $result): SubjectAggregations
+    {
+        $aggregations = [];
+        foreach ($result['aggregations']['benchmark']['subjects']['buckets'] as $bucket) {
+            $aggregations[] = new SubjectAggregation(
+                new DateTimeImmutable($bucket['date']['buckets'][0]['key_as_string']),
+                $benchmarkClass,
+                $subjectName,
+                $bucket['average']['value'],
+                $bucket['host']['buckets'][0]['key'],
+                $bucket['iterations']['value'],
+                $bucket['branch']['buckets'][0]['key']
+            );
+        }
+
+        return SubjectAggregations::fromSubjectAggregations($aggregations);
     }
 }

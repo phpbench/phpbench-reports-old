@@ -9,6 +9,7 @@ use Aura\Router\Matcher;
 use Psr\Http\Message\ServerRequestInterface;
 use Phpbench\Reports\Handler\BenchmarksHandler;
 use Phpbench\Reports\Handler\BenchmarkHandler;
+use Phpbench\Reports\Handler\SubjectHandler;
 
 class RouterMiddleware
 {
@@ -25,7 +26,6 @@ class RouterMiddleware
      * @var Matcher
      */
     private $matcher;
-
 
     public function __construct(Map $routeMap, Matcher $matcher)
     {
@@ -59,6 +59,7 @@ class RouterMiddleware
     private function configureRoutes(Map $routeMap)
     {
         $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
+        $routeMap->get('subject', '/benchmark/{class}/subject/{name}', SubjectHandler::class);
         $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
     }
 }
