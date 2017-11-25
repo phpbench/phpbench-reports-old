@@ -11,7 +11,7 @@ use Aura\Router\Route;
 use Aura\Router\Matcher;
 use Aura\Router\Rule\RuleIterator;
 use Phpbench\Reports\Middleware\HandlerMiddleware;
-use Phpbench\Reports\Repository\VariantRepository;
+use Phpbench\Reports\Repository\BenchmarkRepository;
 use Elasticsearch\ClientBuilder;
 use Pimple\Container;
 use Psr\Log\NullLogger;
@@ -19,6 +19,7 @@ use Phpbench\Reports\Handler\BenchmarksHandler;
 use Aura\Router\RouterContainer;
 use Phpbench\Reports\Twig\ReportExtension;
 use Phpbench\Reports\Handler\BenchmarkHandler;
+use Phpbench\Reports\Repository\SubjectRepository;
 
 class ApplicationContainerBuilder
 {
@@ -49,10 +50,9 @@ class ApplicationContainerBuilder
         };
 
         $container[RouterMiddleware::class] = function (Container $container) {
-            $map = $container[RouterContainer::class]->getMap();
             return new RouterMiddleware(
-                $map,
-                new Matcher($map, $container[LoggerInterface::class], new RuleIterator())
+                $container[RouterContainer::class]->getMap(),
+                $container[RouterContainer::class]->getMatcher()
             );
         };
 
@@ -65,15 +65,19 @@ class ApplicationContainerBuilder
         };
 
         $container[BenchmarksHandler::class] = function (Container $container) {
-            return new BenchmarksHandler($container['twig'], $container[VariantRepository::class]);
+            return new BenchmarksHandler($container['twig'], $container[BenchmarkRepository::class]);
         };
 
         $container[BenchmarkHandler::class] = function (Container $container) {
-            return new BenchmarkHandler($container['twig'], $container[VariantRepository::class]);
+            return new BenchmarkHandler($container['twig'], $container[SubjectRepository::class]);
         };
 
-        $container[VariantRepository::class] = function (Container $container) {
-            return new VariantRepository($container['elastic.client']);
+        $container[BenchmarkRepository::class] = function (Container $container) {
+            return new BenchmarkRepository($container['elastic.client']);
+        };
+
+        $container[SubjectRepository::class] = function (Container $container) {
+            return new SubjectRepository($container['elastic.client']);
         };
 
         $container['elastic.client'] = function (Container $container) {

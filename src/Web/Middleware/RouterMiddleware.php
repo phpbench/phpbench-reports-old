@@ -46,10 +46,11 @@ class RouterMiddleware
             ));
         }
 
-        $request = $request->withAttribute(self::REQUEST_HANDLER, $match->handler);
-        foreach ($match->tokens as $tokenName => $tokenValue) {
+        foreach ($match->attributes as $tokenName => $tokenValue) {
             $request = $request->withAttribute($tokenName, $tokenValue);
         }
+
+        $request = $request->withAttribute(self::REQUEST_HANDLER, $match->handler);
 
         return $next($request, $response);
     }
@@ -57,10 +58,7 @@ class RouterMiddleware
 
     private function configureRoutes(Map $routeMap)
     {
-        $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class)
-            ->tokens([
-                'class' => '[A-Za-z0-9]+'
-            ]);
+        $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
         $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
     }
 }

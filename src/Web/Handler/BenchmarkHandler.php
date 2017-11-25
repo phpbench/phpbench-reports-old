@@ -6,7 +6,8 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\ResponseInterface;
 use Twig\Environment;
 use Pagerfanta\Pagerfanta;
-use Phpbench\Reports\Repository\VariantRepository;
+use Phpbench\Reports\Repository\BenchmarkRepository;
+use Phpbench\Reports\Repository\SubjectRepository;
 
 class BenchmarkHandler
 {
@@ -20,7 +21,7 @@ class BenchmarkHandler
      */
     private $repository;
 
-    public function __construct(Environment $twig, VariantRepository $repository)
+    public function __construct(Environment $twig, SubjectRepository $repository)
     {
         $this->twig = $twig;
         $this->repository = $repository;
@@ -28,9 +29,9 @@ class BenchmarkHandler
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $subjects = $this->repository->subjects($request->getAttribute('class'));
+        $subjects = $this->repository->subjectsForBenchmarkClass($request->getAttribute('class'));
         $response->getBody()->write($this->twig->render('benchmark.html.twig', [
-            'benchmarks' => $subjects
+            'subjects' => $subjects
         ]));
 
         return $response;

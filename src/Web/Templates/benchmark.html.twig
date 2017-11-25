@@ -2,15 +2,15 @@
 <table>
     <thead>
         <tr>
-            <th>Class</th>
+            <th>Subject</th>
             <th>Count</th>
         </tr>
     </thead>
     <tbody>
-{% for benchmark in benchmarks %}
+{% for subject in subjects %}
 <tr>
-    <td><a href="{{ path('benchmark', {'class': benchmark.name}) }}">{{ benchmark.name }}</a></td>
-    <td>{{ benchmark.count }}</td>
+    <td>{{ subject.name }}</a></td>
+    <td>{{ subject.count }}</a></td>
 </tr>
 {% endfor %}
     </tbody>

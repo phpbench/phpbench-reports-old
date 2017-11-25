@@ -5,7 +5,7 @@ namespace Phpbench\Reports\Repository;
 use Elasticsearch\Client;
 use Phpbench\Reports\Model\BenchmarkRow;
 
-class VariantRepository
+class BenchmarkRepository
 {
     const INDEX = 'phpbench_variant';
 
