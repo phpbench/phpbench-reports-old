@@ -8,7 +8,7 @@ use Twig\Environment;
 use Pagerfanta\Pagerfanta;
 use Phpbench\Reports\Repository\VariantRepository;
 
-class BenchmarkHandler
+class BenchmarksHandler
 {
     /**
      * @var Environment
@@ -16,7 +16,7 @@ class BenchmarkHandler
     private $twig;
 
     /**
-     * @var VariantRepository
+     * @var SuitesRepository
      */
     private $repository;
 
@@ -28,9 +28,8 @@ class BenchmarkHandler
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $subjects = $this->repository->subjects($request->getAttribute('class'));
-        $response->getBody()->write($this->twig->render('benchmark.html.twig', [
-            'benchmarks' => $subjects
+        $response->getBody()->write($this->twig->render('benchmarks.html.twig', [
+            'benchmarks' => $this->repository->benchmarks(50)
         ]));
 
         return $response;

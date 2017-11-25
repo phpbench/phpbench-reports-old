@@ -1,0 +1,17 @@
+<h1>PHPBench Reports</h1>
+<table>
+    <thead>
+        <tr>
+            <th>Class</th>
+            <th>Count</th>
+        </tr>
+    </thead>
+    <tbody>
+{% for benchmark in benchmarks %}
+<tr>
+    <td><a href="{{ path('benchmark', {'class': benchmark.name}) }}">{{ benchmark.name }}</a></td>
+    <td>{{ benchmark.count }}</td>
+</tr>
+{% endfor %}
+    </tbody>
+</table>

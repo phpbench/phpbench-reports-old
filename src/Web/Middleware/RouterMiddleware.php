@@ -7,11 +7,14 @@ use Zend\Diactoros\Response;
 use Aura\Router\Map;
 use Aura\Router\Matcher;
 use Psr\Http\Message\ServerRequestInterface;
+use Phpbench\Reports\Handler\BenchmarksHandler;
 use Phpbench\Reports\Handler\BenchmarkHandler;
 
 class RouterMiddleware
 {
     const REQUEST_HANDLER = '_handler';
+    const REQUEST_TOKENS = '_tokens';
+
 
     /**
      * @var Map
@@ -44,6 +47,9 @@ class RouterMiddleware
         }
 
         $request = $request->withAttribute(self::REQUEST_HANDLER, $match->handler);
+        foreach ($match->tokens as $tokenName => $tokenValue) {
+            $request = $request->withAttribute($tokenName, $tokenValue);
+        }
 
         return $next($request, $response);
     }
@@ -51,6 +57,10 @@ class RouterMiddleware
 
     private function configureRoutes(Map $routeMap)
     {
-        $routeMap->get('benchmarks', '/', BenchmarkHandler::class);
+        $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class)
+            ->tokens([
+                'class' => '[A-Za-z0-9]+'
+            ]);
+        $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
     }
 }

@@ -15,9 +15,10 @@ use Phpbench\Reports\Repository\VariantRepository;
 use Elasticsearch\ClientBuilder;
 use Pimple\Container;
 use Psr\Log\NullLogger;
-use Phpbench\Reports\Handler\BenchmarkHandler;
+use Phpbench\Reports\Handler\BenchmarksHandler;
 use Aura\Router\RouterContainer;
 use Phpbench\Reports\Twig\ReportExtension;
+use Phpbench\Reports\Handler\BenchmarkHandler;
 
 class ApplicationContainerBuilder
 {
@@ -27,7 +28,10 @@ class ApplicationContainerBuilder
             $environment = new Environment(
                 new FilesystemLoader([
                     __DIR__ . '/../Templates'
-                ])
+                ]),
+                [
+                    'strict_variables' => true,
+                ]
             );
             $environment->addExtension(new ReportExtension(
                 $container['route.generator']
@@ -58,6 +62,10 @@ class ApplicationContainerBuilder
 
         $container[HandlerMiddleware::class] = function (Container $container) {
             return new HandlerMiddleware($container['container']);
+        };
+
+        $container[BenchmarksHandler::class] = function (Container $container) {
+            return new BenchmarksHandler($container['twig'], $container[VariantRepository::class]);
         };
 
         $container[BenchmarkHandler::class] = function (Container $container) {

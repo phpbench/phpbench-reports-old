@@ -7,6 +7,8 @@ use Phpbench\Reports\Model\BenchmarkRow;
 
 class VariantRepository
 {
+    const INDEX = 'phpbench_variant';
+
     /**
      * @var Client
      */
@@ -20,7 +22,7 @@ class VariantRepository
     public function benchmarks(string $limit)
     {
         return $this->benchmarksFromResult($this->client->search([
-            'index' => 'phpbench_variant',
+            'index' => self::INDEX,
             'body' => [
                 'aggs' => [
                     'benchmarks' => [
@@ -31,6 +33,11 @@ class VariantRepository
                 ],
             ],
         ]));
+    }
+
+    public function subjects(string $benchmarkClass)
+    {
+        return [];
     }
 
     private function benchmarksFromResult(array $result)

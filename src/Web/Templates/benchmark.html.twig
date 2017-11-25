@@ -9,7 +9,7 @@
     <tbody>
 {% for benchmark in benchmarks %}
 <tr>
-    <td>{{ benchmark.name }}</td>
+    <td><a href="{{ path('benchmark', {'class': benchmark.name}) }}">{{ benchmark.name }}</a></td>
     <td>{{ benchmark.count }}</td>
 </tr>
 {% endfor %}
