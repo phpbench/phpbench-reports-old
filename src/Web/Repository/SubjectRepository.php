@@ -20,9 +20,9 @@ class SubjectRepository
         $this->client = $client;
     }
 
-    public function subjectsForBenchmarkClass(string $benchmarkClass)
+    public function subjectRowsForBenchmarkClass(string $benchmarkClass)
     {
-        return $this->subjectsFromResult($benchmarkClass, $this->client->search([
+        return $this->subjectRowsFromResult($benchmarkClass, $this->client->search([
             'index' => self::INDEX,
             'body' => [
                 'aggs' => [
@@ -45,7 +45,7 @@ class SubjectRepository
         ]));
     }
 
-    private function subjectsFromResult(string $benchmarkClass, array $result)
+    private function subjectRowsFromResult(string $benchmarkClass, array $result)
     {
         $benchmarks = [];
         foreach ($result['aggregations']['benchmark']['subjects']['buckets'] as $bucket) {

@@ -29,7 +29,7 @@ class BenchmarkHandler
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response): ResponseInterface
     {
-        $subjects = $this->repository->subjectsForBenchmarkClass($request->getAttribute('class'));
+        $subjects = $this->repository->subjectRowsForBenchmarkClass($request->getAttribute('class'));
         $response->getBody()->write($this->twig->render('benchmark.html.twig', [
             'subjects' => $subjects
         ]));
