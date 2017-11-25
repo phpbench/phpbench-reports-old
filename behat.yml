@@ -1,0 +1,16 @@
+default:
+    suites:
+        default:
+            contexts:
+                - "Phpbench\\Reports\\Tests\\Context\\SuitesContext"
+            paths:
+                features: tests/Features
+
+
+    extensions:
+        Cjm\Behat\Psr7Extension:
+            app: %paths.base%/tests/TestApplication.php
+        Behat\MinkExtension:
+            sessions:
+                default:
+                    psr7: ~

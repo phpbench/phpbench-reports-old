@@ -7,7 +7,7 @@ use Zend\Diactoros\Response;
 use Aura\Router\Map;
 use Aura\Router\Matcher;
 use Psr\Http\Message\ServerRequestInterface;
-use Phpbench\Reports\Handler\SuitesHandler;
+use Phpbench\Reports\Handler\BenchmarkHandler;
 
 class RouterMiddleware
 {
@@ -51,6 +51,6 @@ class RouterMiddleware
 
     private function configureRoutes(Map $routeMap)
     {
-        $routeMap->get('suites', '/', SuitesHandler::class);
+        $routeMap->get('suites', '/', BenchmarkHandler::class);
     }
 }
