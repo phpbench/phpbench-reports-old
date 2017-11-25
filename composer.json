@@ -16,10 +16,16 @@
     },
     "require": {
         "php-di/php-di": "*",
-        "slim/slim": "^3.0",
-        "elasticsearch/elasticsearch": "^6.0"
+        "twig/twig": "^1.24",
+        "mindplay/middleman": "^1.1",
+        "zendframework/zend-diactoros": "^1.3",
+        "aura/router": "^3.0",
+        "elasticsearch/elasticsearch": "^6.0",
+        "twig/twig": "^2.4"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "*",
+        "behat/behat": "^3.4",
+        "behat/mink-goutte-driver": "^1.2"
     }
 }
