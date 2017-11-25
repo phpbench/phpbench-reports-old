@@ -31,6 +31,7 @@ class BenchmarkHandler
         $response->getBody()->write($this->twig->render('suites.html.twig', [
             'benchmarks' => $this->repository->benchmarks(50)
         ]));
+
         return $response;
     }
 }

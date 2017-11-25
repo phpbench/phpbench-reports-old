@@ -51,6 +51,6 @@ class RouterMiddleware
 
     private function configureRoutes(Map $routeMap)
     {
-        $routeMap->get('suites', '/', BenchmarkHandler::class);
+        $routeMap->get('benchmarks', '/', BenchmarkHandler::class);
     }
 }
