@@ -1,0 +1,25 @@
+{
+    "name": "phpbench/phpbench-reports",
+    "description": "Reporting application for PHPBench based on Elastic Search",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Daniel Leech",
+            "email": "daniel@dantleech.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Phpbench\\Reports\\": "src/Web"
+        }
+    },
+    "require": {
+        "php-di/php-di": "*",
+        "slim/slim": "^3.0",
+        "elasticsearch/elasticsearch": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "*"
+    }
+}
