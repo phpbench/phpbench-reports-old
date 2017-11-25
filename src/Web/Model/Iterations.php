@@ -27,10 +27,21 @@ final class Iterations implements \IteratorAggregate
         }, $this->iterations);
     }
 
-    public function histogram(string $type, string $metric): array
+    public function standardDeviation(string $type, string $metric): float
     {
         $metrics = $this->metrics($type, $metric);
-        $steps = 25;
+        return Statistics::stdev($metrics);
+    }
+
+    public function relativeStandardDeviation(string $type, string $metric): float
+    {
+        $metrics = $this->metrics($type, $metric);
+        return Statistics::rstdev($metrics);
+    }
+
+    public function histogram(string $type, string $metric, int $steps = 25): array
+    {
+        $metrics = $this->metrics($type, $metric);
         return Statistics::histogram($metrics, $steps);
     }
 

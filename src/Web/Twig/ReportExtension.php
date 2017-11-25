@@ -34,6 +34,9 @@ class ReportExtension extends AbstractExtension
         return [
             new TwigFilter('values', function (array $array) {
                 return array_values($array);
+            }),
+            new TwigFilter('round', function (float $value, int $precision) {
+                return number_format($value, $precision);
             })
         ];
     }

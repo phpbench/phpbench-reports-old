@@ -3,25 +3,48 @@
 <h2>{{ benchmark }}::{{ subject }}</h2>
 {% endblock %}
 {% block content %}
-<canvas id="linear" height="100px" ></canvas>
-<canvas id="histogram" height="100px"></canvas>
-<table class="ui table">
-    <thead>
-        <tr>
-            <th>Index</th>
-            <th>Time</th>
-        </tr>
-    </thead>
-    <tbody>
-        {% for iteration in iterations %}
-        <tr>
-            <td>{{ iteration.index() }}</td>
-            <td>{{ iteration.metric('time', 'net') }}</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<div class="ui container">
+    <div class="ui grid">
+
+        <div class="twelve wide column">
+            <h3 class="ui top attached header">Times</h3>
+            <div class="ui attached segment">
+                <canvas id="linear" height="100px" ></canvas>
+            </div>
+
+            <h3 class="ui top attached header">Distribution</h3>
+            <div class="ui attached segment">
+                <canvas id="histogram" height="100px"></canvas>
+            </div>
+        </div>
+
+        <div class="four wide column">
+
+            <table class="ui attached segment table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Time</th>
+                        <th>Z-Value</th>
+                        <th>Mem.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for iteration in iterations %}
+                    <tr>
+                        <td>{{ iteration.index() }}</td>
+                        <td>{{ iteration.metric('time', 'net') }}</td>
+                        <td>{{ iteration.metric('comp', 'z_value') | round(2) }}%</td>
+                        <td>{{ iteration.metric('mem', 'peak') }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 <script>
+
 var linearCtx = document.getElementById("linear").getContext('2d');
 var linearChart = new Chart(linearCtx, {
     type: 'line',
