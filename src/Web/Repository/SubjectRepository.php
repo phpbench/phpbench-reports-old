@@ -38,7 +38,7 @@ class SubjectRepository
                         'aggs' => [
                             'subjects' => [
                                 'terms' => [
-                                    'field' => 'name.keyword'
+                                    'field' => 'subject.keyword'
                                 ],
                             ]
                         ]
@@ -65,7 +65,7 @@ class SubjectRepository
                                     ],
                                     [
                                         'term' => [
-                                            'name.keyword' => $subjectName,
+                                            'subject.keyword' => $subjectName,
                                         ],
                                     ],
                                 ],

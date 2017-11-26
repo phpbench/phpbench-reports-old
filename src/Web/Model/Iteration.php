@@ -27,10 +27,10 @@ class Iteration
 
     public function metric(string $type, string $metric)
     {
-        if (!isset($this->results[$type]['metrics'][$metric])) {
+        if (!isset($this->results[$type][$metric])) {
             return null;
         }
 
-        return $this->results[$type]['metrics'][$metric];
+        return $this->results[$type][$metric];
     }
 }

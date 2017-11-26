@@ -34,7 +34,7 @@ class IterationRepository
                         'must' => [ 
                             [
                                 'term' => [
-                                    'class.keyword' => $benchmark,
+                                    'benchmark.keyword' => $benchmark,
                                 ],
                             ],
                             [

@@ -26,6 +26,7 @@ use Phpbench\Reports\Repository\IterationRepository;
 use Symfony\Component\Yaml\Yaml;
 use Phpbench\Reports\Handler\ApiSuitePostHandler;
 use Phpbench\Reports\Handler\ApiIterationsPostHandler;
+use Phpbench\Reports\Elastic\ElasticStorage;
 
 class ApplicationContainerBuilder
 {
@@ -91,11 +92,11 @@ class ApplicationContainerBuilder
         };
 
         $container[ApiSuitePostHandler::class] = function (Container $container) {
-            return new ApiSuitePostHandler();
+            return new ApiSuitePostHandler($container['elastic.storage']);
         };
 
         $container[ApiIterationsPostHandler::class] = function (Container $container) {
-            return new ApiIterationsPostHandler();
+            return new ApiIterationsPostHandler($container['elastic.storage']);
         };
 
         $container[BenchmarkRepository::class] = function (Container $container) {
@@ -112,6 +113,10 @@ class ApplicationContainerBuilder
 
         $container['elastic.client'] = function (Container $container) {
             return ClientBuilder::fromConfig($this->config['elastic_search']);
+        };
+
+        $container['elastic.storage'] = function (Container $container) {
+            return new ElasticStorage($container['elastic.client']);
         };
     }
 
