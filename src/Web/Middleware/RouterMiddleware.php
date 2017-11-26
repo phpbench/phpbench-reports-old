@@ -11,6 +11,8 @@ use Phpbench\Reports\Handler\BenchmarksHandler;
 use Phpbench\Reports\Handler\BenchmarkHandler;
 use Phpbench\Reports\Handler\SubjectHandler;
 use Phpbench\Reports\Handler\VariantHandler;
+use Phpbench\Reports\Handler\ApiSuitePostHandler;
+use Phpbench\Reports\Handler\ApiIterationsPostHandler;
 
 class RouterMiddleware
 {
@@ -64,6 +66,7 @@ class RouterMiddleware
         $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
         $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
 
-        $routeMap->post('suite', '/suite', SuitePostHandler::class);
+        $routeMap->post('suite', '/api/v1/suite', ApiSuitePostHandler::class);
+        $routeMap->post('iterations', '/api/v1/iterations', ApiIterationsPostHandler::class);
     }
 }

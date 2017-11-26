@@ -24,6 +24,8 @@ use Phpbench\Reports\Handler\SubjectHandler;
 use Phpbench\Reports\Handler\VariantHandler;
 use Phpbench\Reports\Repository\IterationRepository;
 use Symfony\Component\Yaml\Yaml;
+use Phpbench\Reports\Handler\ApiSuitePostHandler;
+use Phpbench\Reports\Handler\ApiIterationsPostHandler;
 
 class ApplicationContainerBuilder
 {
@@ -86,6 +88,14 @@ class ApplicationContainerBuilder
 
         $container[BenchmarkHandler::class] = function (Container $container) {
             return new BenchmarkHandler($container['twig'], $container[SubjectRepository::class]);
+        };
+
+        $container[ApiSuitePostHandler::class] = function (Container $container) {
+            return new ApiSuitePostHandler();
+        };
+
+        $container[ApiIterationsPostHandler::class] = function (Container $container) {
+            return new ApiIterationsPostHandler();
         };
 
         $container[BenchmarkRepository::class] = function (Container $container) {
