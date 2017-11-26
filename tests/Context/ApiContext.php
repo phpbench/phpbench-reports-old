@@ -17,6 +17,8 @@ class ApiContext extends RawMinkContext implements Context
     public function iSubmitThePayloadToTheVariantsEndpoint($payloadName)
     {
         $this->submitPayload($payloadName, '/api/v1/suite');
+        $response = $this->getClient()->getResponse();
+        Assert::assertEquals('[]', $response->getContent());
     }
 
     /**
@@ -25,6 +27,8 @@ class ApiContext extends RawMinkContext implements Context
     public function iSubmitThePayloadToTheIterationsEndpoint($payloadName)
     {
         $this->submitPayload($payloadName, '/api/v1/iterations');
+        $response = $this->getClient()->getResponse();
+        Assert::assertEquals('[]', $response->getContent());
     }
 
     /**

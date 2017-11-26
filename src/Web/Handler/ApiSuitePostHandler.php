@@ -23,8 +23,8 @@ class ApiSuitePostHandler
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response)
     {
         $this->storage->put('variant', (array) json_decode($request->getBody()->getContents(), true));
-        $response->getBody()->write(json_encode([]));
         $response = $response->withHeader('Content-Type', 'application/json');
+        $response->getBody()->write('[]');
 
         return $response;
     }

@@ -23,11 +23,12 @@ class BenchmarkRepository
     {
         return $this->benchmarksFromResult($this->client->search([
             'index' => self::INDEX,
+            'size' => 0,
             'body' => [
                 'aggs' => [
                     'benchmarks' => [
                         'terms' => [
-                            'field' => 'class.keyword'
+                            'field' => 'benchmark.keyword'
                         ],
                     ],
                 ],

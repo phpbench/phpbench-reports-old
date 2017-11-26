@@ -27,6 +27,7 @@ class SubjectRepository
     {
         return $this->subjectRowsFromResult($benchmarkClass, $this->client->search([
             'index' => self::INDEX,
+            'size' => 0,
             'body' => [
                 'aggs' => [
                     'benchmark' => [

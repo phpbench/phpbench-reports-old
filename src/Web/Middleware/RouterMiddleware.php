@@ -19,7 +19,6 @@ class RouterMiddleware
     const REQUEST_HANDLER = '_handler';
     const REQUEST_TOKENS = '_tokens';
 
-
     /**
      * @var Map
      */

@@ -27,7 +27,7 @@ class SecurityMiddleware
             $this->secureApi($request);
         }
 
-        return $response;
+        return $next($request, $response);
     }
 
     private function secureApi(ServerRequestInterface $request): void

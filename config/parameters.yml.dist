@@ -1,0 +1,8 @@
+# Elastic search connection parameters 
+# https://www.elastic.co/guide/en/elasticsearch/client/php-api/current/index.html
+elastic_search:
+    hosts: [ localhost:9200 ]
+
+# Generic API key
+api_key: changeme
+
