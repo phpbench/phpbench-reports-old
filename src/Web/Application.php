@@ -9,11 +9,14 @@ use Phpbench\Reports\Middleware\ContainerResolver;
 use Pimple\Psr11\Container as Psr11Container;
 use Pimple\Container;
 use mindplay\middleman\Dispatcher;
+use Symfony\Component\Debug\Debug;
 
 class Application
 {
     public static function createDispatcher(): Dispatcher
     {
+        Debug::enable();
+
         $container = new Container();
         $builder = new ApplicationContainerBuilder();
         $builder->build($container);

@@ -98,7 +98,7 @@ class ApplicationContainerBuilder
         $container['elastic.client'] = function (Container $container) {
             return ClientBuilder::create()
                 ->setHosts([
-                    'localhost:9201',
+                    'localhost:9200',
                 ])->build();
         };
     }
