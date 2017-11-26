@@ -6,22 +6,21 @@ use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
 use PHPUnit\Framework\Assert;
+use Behat\Gherkin\Node\PyStringNode;
+use Symfony\Component\BrowserKit\Client;
 
-class SuitesContext extends RawMinkContext implements Context
+class ApiContext extends RawMinkContext implements Context
 {
     /**
-     * @When I visit :arg1
+     * @Given I post the following payload to :url:
      */
-    public function iVisit($arg1)
+    public function iPostTheFollowingPayloadTo($url, PyStringNode $payload)
     {
-        $this->getSession()->visit($arg1);
-        Assert::assertEquals(200, $this->getSession()->getStatusCode());
+        $this->getClient()->request('POST', $url, [], [], [], (string) $payload);
     }
 
-    /**
-     * @Then I should see a list of suites
-     */
-    public function iShouldSeeAListOfSuites()
+    private function getClient(): Client
     {
+        return $this->getSession()->getDriver()->getClient();
     }
 }

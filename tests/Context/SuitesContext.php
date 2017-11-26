@@ -5,6 +5,7 @@ namespace Phpbench\Reports\Tests\Context;
 use Behat\MinkExtension\Context\RawMinkContext;
 use Behat\Behat\Context\Context;
 use Behat\Behat\Tester\Exception\PendingException;
+use PHPUnit\Framework\Assert;
 
 class SuitesContext extends RawMinkContext implements Context
 {
@@ -14,6 +15,7 @@ class SuitesContext extends RawMinkContext implements Context
     public function iVisit($arg1)
     {
         $this->getSession()->visit($arg1);
+        Assert::assertEquals(200, $this->getSession()->getStatusCode());
     }
 
     /**
@@ -21,6 +23,5 @@ class SuitesContext extends RawMinkContext implements Context
      */
     public function iShouldSeeAListOfSuites()
     {
-        throw new PendingException();
     }
 }

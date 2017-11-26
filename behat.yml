@@ -3,9 +3,10 @@ default:
         default:
             contexts:
                 - "Phpbench\\Reports\\Tests\\Context\\SuitesContext"
+                - "Phpbench\\Reports\\Tests\\Context\\ApiContext"
+                - "Behat\\MinkExtension\\Context\\MinkContext"
             paths:
                 features: tests/Features
-
 
     extensions:
         Cjm\Behat\Psr7Extension:
