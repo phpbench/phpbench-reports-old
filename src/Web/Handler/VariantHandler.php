@@ -37,6 +37,7 @@ class VariantHandler
             'iterations' => $iterations,
             'benchmark' => $class,
             'subject' => $subject,
+            'suite' => $suite,
         ]));
 
         return $response;

@@ -1,12 +1,13 @@
 {% extends "layout.html.twig" %}
 {% block title %}
-<h2>{{ benchmark }}::{{ subject }}</h2>
+    <p>Suite: <code>{{ suite }}</code></p>
+    <h2>{{ benchmark }}::{{ subject }}</h2>
 {% endblock %}
 {% block content %}
 <div class="ui container">
     <div class="ui grid">
 
-        <div class="twelve wide column">
+        <div class="sixteen wide column">
             <h3 class="ui top attached header">Times</h3>
             <div class="ui attached segment">
                 <canvas id="linear" height="100px" ></canvas>
@@ -18,14 +19,14 @@
             </div>
         </div>
 
-        <div class="four wide column">
+        <div class="sixteen wide column">
 
             <table class="ui attached segment table">
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Time</th>
-                        <th>Z-Value</th>
+                        <th>µs</th>
+                        <th>Z</th>
                         <th>Mem.</th>
                     </tr>
                 </thead>
@@ -33,9 +34,9 @@
                     {% for iteration in iterations %}
                     <tr>
                         <td>{{ iteration.index() }}</td>
-                        <td>{{ iteration.metric('time', 'net') }}</td>
-                        <td>{{ iteration.metric('comp', 'z_value') | round(2) }}%</td>
-                        <td>{{ iteration.metric('mem', 'peak') }}</td>
+                        <td>{{ iteration.metric('time', 'net') | round(0) }}</td>
+                        <td>{{ iteration.metric('comp', 'z_value') | round(2) }}σ</td>
+                        <td>{{ iteration.metric('mem', 'peak') | round(0) }}b</td>
                     </tr>
                     {% endfor %}
                 </tbody>
