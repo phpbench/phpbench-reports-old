@@ -28,6 +28,9 @@ use Phpbench\Reports\Handler\ApiSuitePostHandler;
 use Phpbench\Reports\Handler\ApiIterationsPostHandler;
 use Phpbench\Reports\Elastic\ElasticStorage;
 use Phpbench\Reports\Middleware\JsonErrorMiddleware;
+use Phpbench\Reports\Middleware\SecurityMiddleware;
+use Symfony\Component\Dotenv\Dotenv;
+use Phpbench\Reports\Env;
 
 class ApplicationContainerBuilder
 {
@@ -70,6 +73,10 @@ class ApplicationContainerBuilder
 
         $container[JsonErrorMiddleware::class] = function (Container $container) {
             return new JsonErrorMiddleware();
+        };
+
+        $container[SecurityMiddleware::class] = function (Container $container) {
+            return new SecurityMiddleware($this->config['api_key']);
         };
 
         $container['route.generator'] = function (Container $container) {
@@ -129,6 +136,7 @@ class ApplicationContainerBuilder
     {
         $defaultConfig = [
             'elastic_search' => [],
+            'api_key' => null,
         ];
 
         $config = [];
@@ -136,7 +144,13 @@ class ApplicationContainerBuilder
             $config = (array) Yaml::parse(file_get_contents($this->configDir()));
         }
 
-        $this->config = array_merge($defaultConfig, $config);
+        $config = array_merge($defaultConfig, $config);
+
+        if ($apiKey = getenv(Env::API_KEY)) {
+            $config['api_key'] = $apiKey;
+        }
+
+        $this->config = $config;
     }
 
     private function configDir(): string

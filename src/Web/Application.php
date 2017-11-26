@@ -11,6 +11,7 @@ use Pimple\Container;
 use mindplay\middleman\Dispatcher;
 use Symfony\Component\Debug\Debug;
 use Phpbench\Reports\Middleware\JsonErrorMiddleware;
+use Phpbench\Reports\Middleware\SecurityMiddleware;
 
 class Application
 {
@@ -25,6 +26,7 @@ class Application
 
         return new Dispatcher([
             JsonErrorMiddleware::class,
+            SecurityMiddleware::class,
             RouterMiddleware::class,
             HandlerMiddleware::class,
         ], new ContainerResolver($container['container']));

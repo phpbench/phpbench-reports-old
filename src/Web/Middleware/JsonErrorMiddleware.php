@@ -13,7 +13,7 @@ class JsonErrorMiddleware
         try {
             return $next($request, $response);
         } catch (Exception $exception) {
-            if ($request->getHeader('content-type')[0] !== 'application/json') {
+            if ($request->hasHeader('content-type') && $request->getHeader('content-type')[0] !== 'application/json') {
                 throw $exception;
             }
             $response = $response->withStatus('500');

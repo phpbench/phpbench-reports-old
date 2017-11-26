@@ -27,14 +27,24 @@ class ApiContext extends RawMinkContext implements Context
         $this->submitPayload($payloadName, '/api/v1/iterations');
     }
 
+    /**
+     * @When I submit with an invalid API key
+     */
+    public function iSubmitWithAnInvalidApiKey()
+    {
+        $this->submitPayload('variant1.json', '/api/v1/iterations', 'invalid-api-key');
+    }
+
     private function getClient(): Client
     {
         return $this->getSession()->getDriver()->getClient();
     }
 
-    private function submitPayload($payloadName, string $url): void
+    private function submitPayload($payloadName, string $url, $apiKey = 'valid-api-key'): void
     {
         $payload = file_get_contents(__DIR__ . '/payloads/' . $payloadName);
-        $this->getClient()->request('POST', $url, [], [], [], (string) $payload);
+        $this->getClient()->request('POST', $url, [], [], [
+            'HTTP_X-API-Key' => $apiKey
+        ], (string) $payload);
     }
 }
