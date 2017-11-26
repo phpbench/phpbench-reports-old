@@ -12,6 +12,7 @@ use mindplay\middleman\Dispatcher;
 use Symfony\Component\Debug\Debug;
 use Phpbench\Reports\Middleware\JsonErrorMiddleware;
 use Phpbench\Reports\Middleware\SecurityMiddleware;
+use Phpbench\Reports\Middleware\ExceptionHandlerMiddleware;
 
 class Application
 {
@@ -26,6 +27,7 @@ class Application
 
         return new Dispatcher([
             JsonErrorMiddleware::class,
+            ExceptionHandlerMiddleware::class,
             SecurityMiddleware::class,
             RouterMiddleware::class,
             HandlerMiddleware::class,

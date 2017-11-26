@@ -31,6 +31,7 @@ use Phpbench\Reports\Middleware\JsonErrorMiddleware;
 use Phpbench\Reports\Middleware\SecurityMiddleware;
 use Symfony\Component\Dotenv\Dotenv;
 use Phpbench\Reports\Env;
+use Phpbench\Reports\Middleware\ExceptionHandlerMiddleware;
 
 class ApplicationContainerBuilder
 {
@@ -73,6 +74,10 @@ class ApplicationContainerBuilder
 
         $container[JsonErrorMiddleware::class] = function (Container $container) {
             return new JsonErrorMiddleware();
+        };
+
+        $container[ExceptionHandlerMiddleware::class] = function (Container $container) {
+            return new ExceptionHandlerMiddleware();
         };
 
         $container[SecurityMiddleware::class] = function (Container $container) {
