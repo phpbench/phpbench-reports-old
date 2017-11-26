@@ -27,6 +27,7 @@ use Symfony\Component\Yaml\Yaml;
 use Phpbench\Reports\Handler\ApiSuitePostHandler;
 use Phpbench\Reports\Handler\ApiIterationsPostHandler;
 use Phpbench\Reports\Elastic\ElasticStorage;
+use Phpbench\Reports\Middleware\JsonErrorMiddleware;
 
 class ApplicationContainerBuilder
 {
@@ -65,6 +66,10 @@ class ApplicationContainerBuilder
                 $container[RouterContainer::class]->getMap(),
                 $container[RouterContainer::class]->getMatcher()
             );
+        };
+
+        $container[JsonErrorMiddleware::class] = function (Container $container) {
+            return new JsonErrorMiddleware();
         };
 
         $container['route.generator'] = function (Container $container) {

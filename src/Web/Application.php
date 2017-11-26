@@ -10,6 +10,7 @@ use Pimple\Psr11\Container as Psr11Container;
 use Pimple\Container;
 use mindplay\middleman\Dispatcher;
 use Symfony\Component\Debug\Debug;
+use Phpbench\Reports\Middleware\JsonErrorMiddleware;
 
 class Application
 {
@@ -23,6 +24,7 @@ class Application
         $container['container'] = new Psr11Container($container);
 
         return new Dispatcher([
+            JsonErrorMiddleware::class,
             RouterMiddleware::class,
             HandlerMiddleware::class,
         ], new ContainerResolver($container['container']));
