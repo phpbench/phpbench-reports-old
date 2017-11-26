@@ -63,7 +63,7 @@ class RouterMiddleware
         $routeMap->get('subject', '/benchmark/{class}/subject/{name}', SubjectHandler::class);
         $routeMap->get('benchmark', '/benchmark/{class}', BenchmarkHandler::class);
         $routeMap->get('benchmarks', '/', BenchmarksHandler::class);
-        $routeMap->get('suite', '/', BenchmarksHandler::class)
-            ->allows('POST');
+
+        $routeMap->post('suite', '/suite', SuitePostHandler::class);
     }
 }

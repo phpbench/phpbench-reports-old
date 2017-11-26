@@ -23,11 +23,16 @@ use Phpbench\Reports\Repository\SubjectRepository;
 use Phpbench\Reports\Handler\SubjectHandler;
 use Phpbench\Reports\Handler\VariantHandler;
 use Phpbench\Reports\Repository\IterationRepository;
+use Symfony\Component\Yaml\Yaml;
 
 class ApplicationContainerBuilder
 {
+    private $config = [];
+
     public function build(Container $container)
     {
+        $this->initConfig();
+
         $container['twig'] = function (Container $container) {
             $environment = new Environment(
                 new FilesystemLoader([
@@ -96,10 +101,26 @@ class ApplicationContainerBuilder
         };
 
         $container['elastic.client'] = function (Container $container) {
-            return ClientBuilder::create()
-                ->setHosts([
-                    'localhost:9200',
-                ])->build();
+            return ClientBuilder::fromConfig($this->config['elastic_search']);
         };
+    }
+
+    public function initConfig()
+    {
+        $defaultConfig = [
+            'elastic_search' => [],
+        ];
+
+        $config = [];
+        if (file_exists($this->configDir())) {
+            $config = (array) Yaml::parse(file_get_contents($this->configDir()));
+        }
+
+        $this->config = array_merge($defaultConfig, $config);
+    }
+
+    private function configDir(): string
+    {
+        return __DIR__ . '/../../../config/parameters.yml';
     }
 }

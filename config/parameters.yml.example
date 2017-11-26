@@ -1,0 +1,3 @@
+#elastic_search:
+#    hosts: [ localhost:9201 ]
+
