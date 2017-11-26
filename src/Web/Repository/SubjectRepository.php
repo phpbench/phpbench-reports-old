@@ -33,7 +33,7 @@ class SubjectRepository
                     'benchmark' => [
                         'filter' => [
                             'term' => [
-                                'class.keyword' => $benchmarkClass,
+                                'benchmark.keyword' => $benchmarkClass,
                             ],
                         ],
                         'aggs' => [
@@ -61,7 +61,7 @@ class SubjectRepository
                                 'must' => [ 
                                     [
                                         'term' => [
-                                            'class.keyword' => $benchmarkClass,
+                                            'benchmark.keyword' => $benchmarkClass,
                                         ],
                                     ],
                                     [
