@@ -23,7 +23,7 @@ class SecurityMiddleware
 
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, callable $next)
     {
-        if (preg_match('{/api/*}', $request->getUri())) {
+        if (preg_match('{^/api/*}', $request->getUri()->getPath())) {
             $this->secureApi($request);
         }
 
