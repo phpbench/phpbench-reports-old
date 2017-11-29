@@ -3,6 +3,9 @@
 namespace Phpbench\Reports\Model;
 
 use Phpbench\Reports\Util\Statistics;
+use MathPHP\Statistics\KernelDensityEstimation;
+use MathPHP\Functions\Map\Single;
+use MathPHP\Statistics\Average;
 
 final class Iterations implements \IteratorAggregate
 {
@@ -33,10 +36,52 @@ final class Iterations implements \IteratorAggregate
         return Statistics::stdev($metrics);
     }
 
+    public function mean(string $type, string $metric): int
+    {
+        $metrics = $this->metrics($type, $metric);
+        return Statistics::mean($metrics);
+    }
+
+    public function min(string $type, string $metric): int
+    {
+        $metrics = $this->metrics($type, $metric);
+        return min($metrics);
+    }
+
+    public function max(string $type, string $metric): int
+    {
+        $metrics = $this->metrics($type, $metric);
+        return max($metrics);
+    }
+
     public function relativeStandardDeviation(string $type, string $metric): float
     {
         $metrics = $this->metrics($type, $metric);
         return Statistics::rstdev($metrics);
+    }
+
+    public function mode(string $type, string $metric)
+    {
+        $metrics = $this->metrics($type, $metric);
+        return Statistics::kdeMode($metrics);
+    }
+
+    public function densityEstimation(string $type, string $metric, int $steps = 25)
+    {
+        $values = $this->metrics($type, $metric);
+        $kde = new KernelDensityEstimation($values);
+
+        $min = min($values);
+        $max = max($values);
+
+        $step = ($max - $min) / $steps;
+
+        $points = [];
+        for ($i = $min; $i <= $max; $i+= $step) {
+            $points[] = $kde->evaluate($i);
+        }
+
+        return $points;
     }
 
     public function histogram(string $type, string $metric, int $steps = 25): array

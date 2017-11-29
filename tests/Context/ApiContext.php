@@ -39,6 +39,15 @@ class ApiContext extends RawMinkContext implements Context
         $this->submitPayload('variant1.json', '/api/v1/iterations', 'invalid-api-key');
     }
 
+    /**
+     * @Then I should receive a link to the results
+     */
+    public function iShouldReceiveALinkToTheResults()
+    {
+        $response = $this->getClient()->getResponse();
+        $response = json_decode($response, true);
+    }
+
     private function getClient(): Client
     {
         return $this->getSession()->getDriver()->getClient();

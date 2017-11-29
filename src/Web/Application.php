@@ -18,8 +18,6 @@ class Application
 {
     public static function createDispatcher(): Dispatcher
     {
-        Debug::enable();
-
         $container = new Container();
         $builder = new ApplicationContainerBuilder();
         $builder->build($container);

@@ -60,10 +60,41 @@ var linearChart = new Chart(linearCtx, {
                 data: {{ iterations.metrics('time', 'net') | json_encode | raw }},
             }
         ]
+    },
+    options: {
+        annotation: {
+            annotations: [
+                {
+                    type: "line",
+                    mode: "horizontal",
+                    scaleID: "y-axis-0",
+                    value: {{ iterations.mean('time', 'net') }},
+                    borderColor: "purple",
+                    label: {
+                        content: "Mean {{ iterations.mean('time', 'net') | number_format }}",
+                        enabled: true,
+                        position: "right",
+                    }
+                },
+                {
+                    type: "line",
+                    mode: "horizontal",
+                    scaleID: "y-axis-0",
+                    value: {{ iterations.mode('time', 'net') }},
+                    borderColor: "violet",
+                    label: {
+                        content: "Mode {{ iterations.mode('time', 'net') | number_format }}",
+                        enabled: true,
+                        position: "right"
+                    }
+                }
+            ]
+        }
     }
 });
 
 {% set histogram = iterations.histogram('time', 'net') %}
+{% set kde = iterations.densityEstimation('time', 'net') %}
 var histogramCtx = document.getElementById("histogram").getContext('2d');
 var histogramChart = new Chart(histogramCtx, {
     type: 'bar',
@@ -74,10 +105,80 @@ var histogramChart = new Chart(histogramCtx, {
                 fill: false,
                 borderColor: "rgb(1,123,123)",
                 borderWidth: 2,
+                xAxisID: 'microseconds',
+                yAxisID: 'count',
                 label: '# microseconds',
                 data: {{ histogram | values | json_encode | raw }},
+            },
+            {
+                type: 'line',
+                borderColor: "rgb(1,23,23)",
+                borderWidth: 1,
+                label: '# density',
+                data: {{ kde | values | json_encode | raw }},
+                yAxisID: 'density',
             }
-        ]
+        ],
+    },
+    options: {
+        scales: {
+            xAxes: [
+                {
+                    id: 'microseconds',
+                    type: 'category',
+                }, 
+                {
+                    id: 'linearmicroseconds',
+                    type: 'linear',
+                    ticks: {
+                        min: {{ iterations.min('time', 'net') }},
+                        max: {{ iterations.max('time', 'net') }},
+                    }
+                }, 
+            ],
+            yAxes: [
+                {
+                    id: 'count',
+                    type: 'linear',
+                    position: 'left',
+                    label: 'count',
+                }, 
+                {
+                    id: 'density',
+                    type: 'linear',
+                    position: 'right',
+                    label: 'kernel density',
+                }
+            ]
+        },
+        annotation: {
+            annotations: [
+                {
+                    type: "line",
+                    mode: "vertical",
+                    scaleID: "linearmicroseconds",
+                    value: {{ iterations.mean('time', 'net') }},
+                    borderColor: "purple",
+                    label: {
+                        content: "Mean {{ iterations.mean('time', 'net') | number_format }}",
+                        enabled: true,
+                        position: "top",
+                    }
+                },
+                {
+                    type: "line",
+                    mode: "vertical",
+                    scaleID: "linearmicroseconds",
+                    value: {{ iterations.mode('time', 'net') }},
+                    borderColor: "violet",
+                    label: {
+                        content: "Mode {{ iterations.mode('time', 'net') | number_format }}",
+                        enabled: true,
+                        position: "top"
+                    }
+                }
+            ]
+        }
     }
 });
 </script>

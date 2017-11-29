@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+Chart.Annotation.js@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/Chart.Annotation.js/-/Chart.Annotation.js-0.1.1.tgz#f231652d8faea8c8ed571e0f37bf39bd981b214a"
+  dependencies:
+    chart.js "^2.1.0"
+
 ansi-regex@^2.0.0:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/ansi-regex/-/ansi-regex-2.1.1.tgz#c3b33ab5ee360d86e0e628f0468ae7ef27d654df"
@@ -77,7 +83,7 @@ chalk@^1.0.0, chalk@^1.1.1:
     strip-ansi "^3.0.0"
     supports-color "^2.0.0"
 
-chart.js@^2.7.1:
+chart.js@^2.1.0, chart.js@^2.4.0, chart.js@^2.7.1:
   version "2.7.1"
   resolved "https://registry.yarnpkg.com/chart.js/-/chart.js-2.7.1.tgz#ae90b4aa4ff1f02decd6b1a2a8dabfd73c9f9886"
   dependencies:
@@ -96,6 +102,12 @@ chartjs-color@~2.2.0:
   dependencies:
     chartjs-color-string "^0.5.0"
     color-convert "^0.5.3"
+
+chartjs-plugin-annotation@^0.5.7:
+  version "0.5.7"
+  resolved "https://registry.yarnpkg.com/chartjs-plugin-annotation/-/chartjs-plugin-annotation-0.5.7.tgz#1bf0e30199a6a9ff9889ce0f37a1e755a80d10bf"
+  dependencies:
+    chart.js "^2.4.0"
 
 clone-stats@^0.0.1:
   version "0.0.1"

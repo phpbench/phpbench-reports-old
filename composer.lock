@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "e46a1ddcb83df105ceca35497257afbc",
+    "content-hash": "22f7ba5f753d31f862c6429bb0401529",
     "packages": [
         {
             "name": "aura/router",
@@ -243,6 +243,71 @@
                 "stream"
             ],
             "time": "2014-10-12T19:18:40+00:00"
+        },
+        {
+            "name": "markrogoyski/math-php",
+            "version": "v0.37.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/markrogoyski/math-php.git",
+                "reference": "a7047cbff56cf862300e9416fb8502a2adbe1fff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/markrogoyski/math-php/zipball/a7047cbff56cf862300e9416fb8502a2adbe1fff",
+                "reference": "a7047cbff56cf862300e9416fb8502a2adbe1fff",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "5.*",
+                "satooshi/php-coveralls": "dev-master",
+                "squizlabs/php_codesniffer": "2.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "MathPHP\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mark Rogoyski",
+                    "email": "mark@rogoyski.com",
+                    "homepage": "https://github.com/markrogoyski",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Kevin Nowaczyk",
+                    "role": "Contributor"
+                },
+                {
+                    "name": "Jakob Sandberg",
+                    "role": "Contributor"
+                }
+            ],
+            "description": "Math Library for PHP. Features descriptive statistics and regressions; Continuous and discrete probability distributions; Linear algebra with matrices and vectors, Numerical analysis; special mathematical functions; Algebra",
+            "homepage": "https://github.com/markrogoyski/math-php/",
+            "keywords": [
+                "algebra",
+                "combinatorics",
+                "distributions",
+                "linear algebra",
+                "math",
+                "mathematics",
+                "matrix",
+                "numerical analysis",
+                "probability",
+                "regressions",
+                "statistics"
+            ],
+            "time": "2017-10-24T04:45:11+00:00"
         },
         {
             "name": "mindplay/middleman",
